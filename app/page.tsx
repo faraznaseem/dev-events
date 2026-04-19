@@ -10,8 +10,8 @@ if (!BASE_URL) {
 }
 
 const Page = async () => {
-    // 'use cache';
-    // cacheLife('hours')
+    'use cache';
+    cacheLife('hours')
     const response = await fetch(`${BASE_URL}/api/events`);
     const text = await response.text();
     let events = [];
