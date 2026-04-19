@@ -2,22 +2,21 @@ import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
 import {IEvent} from "@/database";
 import {cacheLife} from "next/cache";
-import events from "@/lib/constants";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Page = async () => {
     'use cache';
     cacheLife('hours')
-    // const response = await fetch(`${BASE_URL}/api/events`);
-    // const text = await response.text();
-    // let events = [];
-    // try {
-    //     const data = JSON.parse(text);
-    //     events = data.events || [];
-    // } catch (e) {
-    //     console.error("Invalid JSON from /api/events:", text);
-    // }
+    const response = await fetch(`${BASE_URL}/api/events`);
+    const text = await response.text();
+    let events = [];
+    try {
+        const data = JSON.parse(text);
+        events = data.events || [];
+    } catch (e) {
+        console.error("Invalid JSON from /api/events:", text);
+    }
 
     return (
         <section>
