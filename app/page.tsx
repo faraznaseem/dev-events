@@ -7,19 +7,33 @@ const BASE_URL = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
     : 'http://localhost:3000';
 
-
 const Page = async () => {
     'use cache';
     cacheLife('hours')
     const response = await fetch(`${BASE_URL}/api/events`);
-    const { events } = await response.json();
+    console.log("FETCHING FROM:", `${BASE_URL}/api/events`);
+    const text = await response.text();
+    let events = [];
+    let data2;
+    try {
+        const data = JSON.parse(text);
+        data2 =data;
+        console.log("RAW API RESPONSE:", data);
+        events = data.events || [];
+    } catch (e) {
+        console.error("Invalid JSON from /api/events:", text);
+    }
 
     return (
         <section>
-            <h1 className="text-center">The Hub for Every Dev <br /> Event You Can't Miss</h1>
+            <pre>{`Raw api response: ${text}`}</pre>
+            <pre>{`Raw api response: ${data2}`}</pre>
+            <pre>{JSON.stringify(events, null, 2)}</pre>
+            <pre>{`FETCHING FROM: ${BASE_URL}/api/events`}</pre>
+            <h1 className="text-center">The Hub for Every Dev <br/> Event You Can't Miss</h1>
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in One Place</p>
 
-            <ExploreBtn />
+            <ExploreBtn/>
 
             <div className="mt-20 space-y-7">
                 <h3>Featured Events</h3>
@@ -33,7 +47,7 @@ const Page = async () => {
                 </ul>
             </div>
         </section>
-    )
+    );
 }
 
 export default Page;
