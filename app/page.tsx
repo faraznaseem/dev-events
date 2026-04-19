@@ -10,14 +10,21 @@ const Page = async () => {
     cacheLife('hours')
     const response = await fetch(`${BASE_URL}/api/events`);
     console.log("FETCHING FROM:", `${BASE_URL}/api/events`);
-    const { events } = await response.json();
+    const text = await response.text();
+    let events = [];
+    try {
+        const data = JSON.parse(text);
+        events = data.events || [];
+    } catch (e) {
+        console.error("Invalid JSON from /api/events:", text);
+    }
 
     return (
         <section>
-            <h1 className="text-center">The Hub for Every Dev <br /> Event You Can't Miss</h1>
+            <h1 className="text-center">The Hub for Every Dev <br/> Event You Can't Miss</h1>
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in One Place</p>
 
-            <ExploreBtn />
+            <ExploreBtn/>
 
             <div className="mt-20 space-y-7">
                 <h3>Featured Events</h3>
@@ -31,7 +38,7 @@ const Page = async () => {
                 </ul>
             </div>
         </section>
-    )
+    );
 }
 
 export default Page;
