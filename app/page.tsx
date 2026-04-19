@@ -18,6 +18,7 @@ const Page = async () => {
     try {
         const data = JSON.parse(text);
         events = data.events || [];
+        console.log(events);
     } catch (e) {
         console.error("Invalid JSON from /api/events:", text);
     }
