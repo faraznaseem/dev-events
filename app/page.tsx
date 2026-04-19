@@ -18,17 +18,19 @@ const Page = async () => {
     try {
         const data = JSON.parse(text);
         events = data.events || [];
-        console.log(events);
     } catch (e) {
         console.error("Invalid JSON from /api/events:", text);
     }
 
     return (
         <section>
-            <h1 className="text-center">The Hub for Every Dev <br /> Event You Can't Miss</h1>
+            <pre className="text-white">
+    {JSON.stringify(events, null, 2)}
+</pre>
+            <h1 className="text-center">The Hub for Every Dev <br/> Event You Can't Miss</h1>
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in One Place</p>
 
-            <ExploreBtn />
+            <ExploreBtn/>
 
             <div className="mt-20 space-y-7">
                 <h3>Featured Events</h3>
@@ -42,7 +44,7 @@ const Page = async () => {
                 </ul>
             </div>
         </section>
-    )
+    );
 }
 
 export default Page;
