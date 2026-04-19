@@ -21,6 +21,8 @@ const Page = async () => {
 
     return (
         <section>
+            <pre>{JSON.stringify(events, null, 2)}</pre>
+            <pre>{`FETCHING FROM: ${BASE_URL}/api/events`}</pre>
             <h1 className="text-center">The Hub for Every Dev <br/> Event You Can't Miss</h1>
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in One Place</p>
 
