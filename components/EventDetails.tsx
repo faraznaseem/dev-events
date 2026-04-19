@@ -10,6 +10,8 @@ import {cacheLife} from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+if (!BASE_URL) throw new Error("Missing BASE_URL");
+
 const EventDetailItem = ({icon, alt, label}: { icon: string; alt: string; label: string }) => (
     <div className="flex-row-gap-2 items-center">
         <Image src={icon} alt={alt} width={17} height={17}/>
@@ -36,13 +38,11 @@ const EventTags = ({tags}: { tags: string[] }) => (
     </div>
 );
 
-const EventDetails = async ({ params }: { params: Promise<string> }) => {
-    'use cache';
-    cacheLife('hours');
+const EventDetails = async ({ slug }: { slug: string }) => {
 
-    const {slug} = await params;
-
-    const request = await fetch(`${BASE_URL}/api/events/${slug}`);
+    const request = await fetch(`${BASE_URL}/api/events/${slug}`, {
+        next: { revalidate: 3600 },
+    });
     const {event: {description, image, overview, date, time, location, mode, agenda, audience, tags, organizer}} = await request.json();
 
 
