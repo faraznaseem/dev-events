@@ -8,7 +8,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const Page = async () => {
     'use cache';
     cacheLife('hours')
-    const response = await fetch(`/api/events`);
+    const response = await fetch(`${BASE_URL}/api/events`);
     console.log("FETCHING FROM:", `${BASE_URL}/api/events`);
     const text = await response.text();
     let events = [];
