@@ -28,7 +28,7 @@ if (!global.mongoose) {
  * @returns Promise resolving to the Mongoose instance
  */
 async function connectDB(): Promise<typeof mongoose> {
-    // Return existing connection if available
+    // Return an existing connection if available
     if (cached.conn) {
         return cached.conn;
     }

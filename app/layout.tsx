@@ -4,9 +4,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import LightRays from "@/components/LightRays";
 import Navbar from "@/components/Navbar";
-import { PostHogProvider } from "./providers";
-import { PostHogPageView } from "./pageview";
-import { Suspense } from "react";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
@@ -30,35 +27,32 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html
-      lang="en"
-      className={cn("min-h-screen", "antialiased", schibstedGrotesk.variable, martianMono.variable, "font-sans", geist.variable)}
-    >
-      <body className="min-h-full flex flex-col">
-      <PostHogProvider>
-      <Suspense fallback={null}><PostHogPageView /></Suspense>
-      <Navbar/>
-      <div className="absolute inset-0 top0 z-[-1] min-h-screen">
-          <LightRays
-              raysOrigin="top-center-offset"
-              raysColor="#58feca"
-              raysSpeed={0.5}
-              lightSpread={0.9}
-              rayLength={1.4}
-              followMouse={true}
-              mouseInfluence={0.02}
-              noiseAmount={0.0}
-              distortion={0.01}
-              className="custom-rays"
-              pulsating={false}
-              fadeDistance={1}
-              saturation={1}
-          />
-      </div>
-<main>{children}</main>
-      </PostHogProvider>
-      </body>
-    </html>
-  );
+    return (
+        <html
+            lang="en"
+            className={cn("min-h-screen", "antialiased", schibstedGrotesk.variable, martianMono.variable, "font-sans", geist.variable)}
+        >
+        <body className="min-h-full flex flex-col">
+        <Navbar/>
+        <div className="absolute inset-0 top0 z-[-1] min-h-screen">
+            <LightRays
+                raysOrigin="top-center-offset"
+                raysColor="#58feca"
+                raysSpeed={0.5}
+                lightSpread={0.9}
+                rayLength={1.4}
+                followMouse={true}
+                mouseInfluence={0.02}
+                noiseAmount={0.0}
+                distortion={0.01}
+                className="custom-rays"
+                pulsating={false}
+                fadeDistance={1}
+                saturation={1}
+            />
+        </div>
+        <main>{children}</main>
+        </body>
+        </html>
+    );
 }
