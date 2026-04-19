@@ -6,10 +6,6 @@ import events from "@/lib/constants";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-if (!BASE_URL) {
-    throw new Error("BASE_URL is missing");
-}
-
 const Page = async () => {
     'use cache';
     cacheLife('hours')
