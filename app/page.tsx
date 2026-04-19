@@ -2,6 +2,7 @@ import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
 import {IEvent} from "@/database";
 import {cacheLife} from "next/cache";
+import events from "@/lib/constants";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -12,21 +13,18 @@ if (!BASE_URL) {
 const Page = async () => {
     'use cache';
     cacheLife('hours')
-    const response = await fetch(`${BASE_URL}/api/events`);
-    const text = await response.text();
-    let events = [];
-    try {
-        const data = JSON.parse(text);
-        events = data.events || [];
-    } catch (e) {
-        console.error("Invalid JSON from /api/events:", text);
-    }
+    // const response = await fetch(`${BASE_URL}/api/events`);
+    // const text = await response.text();
+    // let events = [];
+    // try {
+    //     const data = JSON.parse(text);
+    //     events = data.events || [];
+    // } catch (e) {
+    //     console.error("Invalid JSON from /api/events:", text);
+    // }
 
     return (
         <section>
-            <pre className="text-white">
-    {JSON.stringify(events, null, 2)}
-</pre>
             <h1 className="text-center">The Hub for Every Dev <br/> Event You Can't Miss</h1>
             <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in One Place</p>
 

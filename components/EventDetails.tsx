@@ -63,7 +63,6 @@ const EventDetails = async ({ params }: { params: Promise<string> }) => {
         let data;
         try {
             data = JSON.parse(text);
-            console.log(data);
         } catch (e) {
             console.error("Non-JSON response from API:", text);
             return notFound();
