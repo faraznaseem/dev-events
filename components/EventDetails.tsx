@@ -9,6 +9,10 @@ import {cacheLife} from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+if (!BASE_URL) {
+    throw new Error("BASE_URL is missing");
+}
+
 const EventDetailItem = ({ icon, alt, label }: { icon: string; alt: string; label: string; }) => (
     <div className="flex-row-gap-2 items-center">
         <Image src={icon} alt={alt} width={17} height={17} />
@@ -41,6 +45,7 @@ const EventDetails = async ({ params }: { params: Promise<string> }) => {
     const slug = await params;
 
     let event;
+
     try {
         const request = await fetch(`${BASE_URL}/api/events/${slug}`, {
             next: { revalidate: 60 }
@@ -50,15 +55,25 @@ const EventDetails = async ({ params }: { params: Promise<string> }) => {
             if (request.status === 404) {
                 return notFound();
             }
-            throw new Error(`Failed to fetch event: ${request.statusText}`);
+            throw new Error(`Failed to fetch event: ${request.status} ${request.statusText}`);
         }
 
-        const response = await request.json();
-        event = response.event;
+        const text = await request.text();
+
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            console.error("Non-JSON response from API:", text);
+            return notFound();
+        }
+
+        event = data?.event;
 
         if (!event) {
             return notFound();
         }
+
     } catch (error) {
         console.error('Error fetching event:', error);
         return notFound();

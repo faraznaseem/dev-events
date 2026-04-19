@@ -5,11 +5,22 @@ import {cacheLife} from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
+if (!BASE_URL) {
+    throw new Error("BASE_URL is missing");
+}
+
 const Page = async () => {
     'use cache';
     cacheLife('hours')
     const response = await fetch(`${BASE_URL}/api/events`);
-    const { events } = await response.json();
+    const text = await response.text();
+    let events = [];
+    try {
+        const data = JSON.parse(text);
+        events = data.events || [];
+    } catch (e) {
+        console.error("Invalid JSON from /api/events:", text);
+    }
 
     return (
         <section>
