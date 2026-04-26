@@ -60,7 +60,8 @@ CLOUDINARY_URL=your_cloudinary_url
 
 ## Installation
 
-git clone https://github.com/your-username/dev-events.git
+```bash
+git clone https://github.com/faraznaseem/dev-events.git
 cd dev-events
 npm install
 npm run dev
